@@ -1,0 +1,32 @@
+name: もふわん自動投稿
+
+on:
+  schedule:
+    - cron: '0 10 * * *'  # 毎日19時（日本時間）
+  workflow_dispatch:  # 手動実行も可能
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node.jsセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: パッケージインストール
+        run: npm install
+
+      - name: Google認証情報を設定
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
+
+      - name: 自動投稿実行
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: credentials.json
+        run: node index.js
