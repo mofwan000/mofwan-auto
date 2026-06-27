@@ -20,10 +20,9 @@ jobs:
         run: npm install
 
       - name: Google認証情報を設定
-        run: |
-          cat > credentials.json << 'ENDOFFILE'
-          ${{ secrets.GOOGLE_CREDENTIALS }}
-          ENDOFFILE
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        run: echo "$GOOGLE_CREDENTIALS" > credentials.json
         shell: bash
 
       - name: 自動投稿実行
