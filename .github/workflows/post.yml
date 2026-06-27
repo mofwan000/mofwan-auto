@@ -21,6 +21,7 @@ jobs:
 
       - name: Google認証情報を設定
         run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
+        shell: bash
 
       - name: 自動投稿実行
         env:
