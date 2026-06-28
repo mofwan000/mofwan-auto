@@ -57,6 +57,16 @@ async function getLatestImageFromDrive() {
       }
     );
   });
+// 投稿済みフォルダに移動する関数を返す
+  const moveToPosted = async () => {
+    await drive.files.update({
+      fileId: file.id,
+      addParents: '1bcCckhx9JPFVlrH9zaReRGt74fT3lA2L',
+      removeParents: folderId,
+      fields: 'id, parents',
+    });
+    console.log('投稿済みフォルダに移動しました');
+  };
 
   return { filePath: destPath, fileName: file.name, imageUrl };
 }
@@ -172,6 +182,8 @@ async function main() {
   console.log('\nInstagramに投稿中...');
   await postToInstagram(imageUrl, caption);
 
+  // 投稿済みフォルダに移動
+  await moveToPosted();
   // 一時ファイルを削除
   fs.unlinkSync(filePath);
   console.log('\n🎉 完了！');
