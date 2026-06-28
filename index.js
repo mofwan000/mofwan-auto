@@ -171,7 +171,7 @@ async function postToInstagram(imageUrl, caption) {
 // メイン処理
 async function main() {
   console.log('Googleドライブから最新画像を取得中...');
-  const { filePath, fileName, imageUrl } = await getLatestImageFromDrive();
+  const { filePath, fileName, imageUrl, moveToPosted } = await getLatestImageFromDrive();
 
   console.log('キャプション生成中...');
   const caption = await generateCaption(filePath, fileName);
