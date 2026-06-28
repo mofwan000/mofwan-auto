@@ -8,8 +8,9 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // Googleドライブから最新の画像を取得
 async function getLatestImageFromDrive() {
+  const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON || require('fs').readFileSync('credentials.json', 'utf8'));
   const auth = new google.auth.GoogleAuth({
-    keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS || 'credentials.json',
+    credentials,
     scopes: ['https://www.googleapis.com/auth/drive'],
   });
 
