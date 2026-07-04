@@ -68,7 +68,7 @@ async function getLatestImageFromDrive() {
     console.log('投稿済みフォルダに移動しました');
   };
 
-  return { filePath: destPath, fileName: file.name, imageUrl };
+  return { filePath: destPath, fileName: file.name, imageUrl, moveToPosted };
 }
 
 // キャプション生成
